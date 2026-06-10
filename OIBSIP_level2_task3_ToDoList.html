@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>To-Do App</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f9ff;
+            display: flex;
+            justify-content: center;
+            padding-top: 30px;
+        }
+
+        .container {
+            width: 700px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 10px lightgray;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a6fa5;
+        }
+
+        input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .addBtn {
+            padding: 10px 15px;
+            border: none;
+            background: #90caf9;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        h2 {
+            color: #5c6bc0;
+        }
+
+        li {
+            list-style: none;
+            background: #eef7ff;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        button {
+            margin-left: 5px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .complete {
+            background: #a5d6a7;
+        }
+
+        .edit {
+            background: #ffe082;
+        }
+
+        .delete {
+            background: #ef9a9a;
+        }
+
+        .time {
+            display: block;
+            font-size: 12px;
+            color: gray;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>My To-Do App</h1>
+
+        <input type="text" id="taskInput" placeholder="Enter Task">
+
+        <button class="addBtn" onclick="addTask()">
+            Add Task
+        </button>
+
+        <h2>Pending Tasks</h2>
+        <ul id="pendingList"></ul>
+
+        <h2>Completed Tasks</h2>
+        <ul id="completedList"></ul>
+
+    </div>
+
+    <script>
+
+        function addTask() {
+            var task =
+                document.getElementById("taskInput").value;
+
+            if (task == "") {
+                alert("Enter a task");
+                return;
+            }
+
+            var li = document.createElement("li");
+
+            var time = new Date().toLocaleString();
+
+            li.innerHTML =
+                task +
+                "<span class='time'>Added : "
+                + time +
+                "</span>" +
+
+                "<button class='complete' onclick='completeTask(this)'>Complete</button>" +
+
+                "<button class='edit' onclick='editTask(this)'>Edit</button>" +
+
+                "<button class='delete' onclick='deleteTask(this)'>Delete</button>";
+
+            document.getElementById("pendingList")
+                .appendChild(li);
+
+            document.getElementById("taskInput")
+                .value = "";
+        }
+
+        function completeTask(btn) {
+            var li = btn.parentElement;
+
+            btn.remove();
+
+            li.innerHTML +=
+                "<span class='time'>Completed : "
+                + new Date().toLocaleString()
+                + "</span>";
+
+            document.getElementById("completedList")
+                .appendChild(li);
+        }
+
+        function editTask(btn) {
+            var li = btn.parentElement;
+
+            var text = prompt(
+                "Edit Task",
+                li.firstChild.textContent);
+
+            if (text != null && text != "") {
+                li.childNodes[0].textContent = text;
+            }
+        }
+
+        function deleteTask(btn) {
+            btn.parentElement.remove();
+        }
+
+    </script>
+
+</body>
+
+</html>
